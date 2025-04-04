@@ -24,6 +24,10 @@ cp .env.example .env
 npm run dev
 ```
 
+## ⚠️⚠️⚠️ Admin
+### username: admin
+### password: Qwert@1234
+
 ```
 src/
 ├── api/
