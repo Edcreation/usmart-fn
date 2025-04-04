@@ -23,6 +23,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ secrets.DOCKER_HUB_USERNAME }}/usmart-fn
+          tags: |
+            type=raw,value=web-latest
+            type=ref,event=branch
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
@@ -30,4 +33,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags:  eddy101/usmart-fn:web-${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
