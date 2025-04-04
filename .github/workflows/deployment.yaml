@@ -30,4 +30,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: usmart-fn-${{ steps.meta.outputs.tags }}
+          tags:  eddy101/usmart-fn:web-${{ steps.meta.outputs.tags }}
