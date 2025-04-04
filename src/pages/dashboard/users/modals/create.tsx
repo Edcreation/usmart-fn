@@ -35,7 +35,7 @@ export default function CreateUserModal() {
 			reset();
 			toastSuccess("User Created");
 		}
-	}, [success_create]);
+	}, [reset, success_create]);
 
 	const roles = ["admin", "student", "teacher"];
 

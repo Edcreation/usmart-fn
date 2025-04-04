@@ -1,54 +1,127 @@
-# React + TypeScript + Vite
+# 🔥 Vite + React Auth App with RBAC
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React authentication boilerplate with **Role-Based Access Control (RBAC)** built with Vite, featuring:
 
-Currently, two official plugins are available:
+- ✅ JWT Authentication
+- 🔐 Admin/User role permissions
+- 🛡️ Protected routes
+- ✨ Sleek UI with Tailwind CSS
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Quick Start
 
-## Expanding the ESLint configuration
+```bash
+# 1. Clone repo
+git clone https://github.com/your-repo/vite-react-rbac.git
+cd vite-react-rbac
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# 2. Install dependencies
+npm install  # or yarn/pnpm
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+# 3. Configure environment
+cp .env.example .env
+
+# 4. Run dev server
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+```
+src/
+├── api/
+├── assets/
+├── components/
+├── pages/
+│   ├── auth/
+│   │   ├── login.tsx
+│   │   └── register.tsx
+│   ├── dashboard/
+│   │   ├── profile/
+│   │   │   └── index.tsx
+│   │   ├── users/
+│   │   │   ├── modals/
+│   │   │   │   ├── create.tsx
+│   │   │   │   ├── delete.tsx
+│   │   │   │   └── update.tsx
+│   │   │   ├── index.tsx
+│   │   │   ├── layout.tsx
+├── error/
+├── store/
+├── utils/
+│   ├── api.js
+│   ├── roles.js
+├── App.tsx
+├── index.css
+├── main.tsx
+```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🔐 Authentication Flow
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```mermaid
+sequenceDiagram
+    User->>Frontend: Login
+    Frontend->>Backend: POST /auth/login
+    Backend->>Frontend: JWT + User Role
+    Frontend->>LocalStorage: Store Token
+    loop Protected Routes
+        Frontend->>Backend: Verify Role (Middleware)
+    end
+```
+
+## 👨‍💻 User Management (RBAC)
+
+| Feature          | Admin | User(teacher, strudent) |
+| ---------------- | ----- | ---- |
+| View Users       | ✅     | ❌    |
+| Create Users     | ✅     | ❌    |
+| Edit Users       | ✅     | ❌    |
+| Delete Users     | ✅     | ❌    |
+| View Own Profile | ✅     | ✅    |
+
+## 🛡️ Route Protection Example
+
+```jsx
+// routes/ProtectedRoute.jsx
+const ProtectedRoute = ({ roles, children }) => {
+  const { user } = useAuth();
+  
+  if (!user?.roles?.some(role => roles.includes(role))) {
+    return <Navigate to="/unauthorized" />;
+  }
+
+  return children;
+};
+
+// Usage:
+<ProtectedRoute roles={['admin']}>
+  <AdminDashboard />
+</ProtectedRoute>
+```
+
+## 🌟 Features
+
+- ⚡ Blazing fast Vite build
+- 🎨 Tailwind CSS styling
+- 🔄 React Query for API calls
+- 📱 Fully responsive
+- 🧪 Jest + Testing Library
+
+## 📦 Deployment
+
+**Deploy with Vercel**
+
+```bash
+# Production build
+npm run build
+
+# Preview build
+npm run preview
+```
+
+## 📜 License
+
+MIT © Mugisha Jedidiah Eddy 2024
+
+### Environment Variables
+
+```ini
+VITE_API_URL=https://ugliest-basia-eddy250-75e7e7b3.koyeb.app
 ```
