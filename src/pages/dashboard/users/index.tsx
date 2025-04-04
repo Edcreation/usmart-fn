@@ -11,11 +11,10 @@ import { useState } from "react";
 
 const UsersPage = () => {
 	const [pageNumber, setPageNumber] = useState(1);
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const [pageSize, _] = useState(10);
-	const { data, isLoading } = useGetUsersQuery({ pageNumber, pageSize });
+	const { data, isLoading } = useGetUsersQuery({ pageNumber });
 
 	const users: User[] = data?.list || [];
+
 
 	const columns: TableColumn<User>[] = [
 		{
