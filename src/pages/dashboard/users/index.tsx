@@ -11,7 +11,8 @@ import { useState } from "react";
 
 const UsersPage = () => {
 	const [pageNumber, setPageNumber] = useState(1);
-	const [pageSize, setPageSize] = useState(10);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	const [pageSize, _] = useState(10);
 	const { data, isLoading } = useGetUsersQuery({ pageNumber, pageSize });
 
 	const users: User[] = data?.list || [];
